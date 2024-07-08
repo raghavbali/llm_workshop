@@ -5,10 +5,10 @@
 
 ### Modules
 #### Module 1: "Foundations of Generative AI and Language Models"
-- [ ] Overview of Generative AI and the basics of language modeling.
-- [ ] NLP Basics for Embedding and Attention: Fundamental concepts in NLP, focusing on embeddings and attention mechanisms.
-- [ ] Language Modeling: Basics of language modeling and its importance.
-- [ ] :star: Hands-On: Implementing a simple language model using basic NLP techniques.
+- [x] Overview of Generative AI and the basics of language modeling.
+- [x] :star: Hands-On: 
+    - [x] Getting Started: Text Representation
+    - [x] Language Modeling Basics and Text Generation using a basic LM.
 
 #### Module 2: "Building Blocks of LLMs"
 - [ ] Transformer Architectures: Detailed look into the Transformer architecture that powers modern LLMs.
