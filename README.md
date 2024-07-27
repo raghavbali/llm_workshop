@@ -62,3 +62,41 @@
 - Basics/hands-on experience with pytorch
 - Access to google-colab or similar python environment
 - Access to chatGPT or Google-Bard (free access) 
+
+---
+
+## Environment Setup Instructions
+
+> [!Important]
+> - Follow Step by Step for a quick setup. This should work as-is for Mac/Linux based systems.
+> - If you already have your own way of managing dependencies, checkout pyproject.toml for poetry or requirements.txt for pip based systems
+> - The requirements.txt file is generated using the command ``poetry export --without-hashes --format=requirements.txt > requirements.txt``
+
+- **We will make use of** :
+    - ``pyenv`` for python version management
+    - ``virtualenv`` for virtual environment management
+    - ``poetry`` for dependency management
+
+- **Pyenv**: 
+    - ``brew install pyenv`` or ``curl https://pyenv.run | bash``
+- **VirtualEnv**: 
+    - install: 
+        - ``brew install pyenv-virtualenv`` or
+        - ``git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv``
+    - add this to your .rc file: ``eval "$(pyenv virtualenv-init -)"``
+- **Poetry**:
+    - install: 
+        - ``curl -sSL https://install.python-poetry.org | python3 -`` or
+        - or check [here](https://python-poetry.org/docs/#installing-with-the-official-installer)
+
+- **Setup**:
+    - If you are on mac/linux and have `make` setup, simply execute: ``make setup`` otherwise:
+    - ``pyenv install 3.11.9``
+	- ``pyenv virtualenv 3.11.9 datahack``
+    - ``cd <path to this repo clone>``
+	- ``pyenv activate datahack``
+	- ``poetry install`` <- Make sure ``pyproject.toml`` file is available in directory you execute this command
+    - If you are using other ways of dependency management, use the `requirements.txt` file for reference.
+
+
+
