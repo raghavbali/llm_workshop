@@ -11,35 +11,34 @@
     - [x] Language Modeling Basics and Text Generation using a basic LM.
 
 #### Module 2: "Building Blocks of LLMs"
-- [ ] Transformer Architectures: Detailed look into the Transformer architecture that powers modern LLMs.
-- [ ] GPT Series of Models: Overview of the evolution of GPT models.
-- [ ] :star: Hands-On: Training a mini Transformer model and experimenting with GPT-2 for text generation.
+- [x] Transformer Architectures: Detailed look into the Transformer architecture that powers modern LLMs.
+- [x] GPT Series of Models: Overview of the evolution of GPT models.
+- [x] Evaluation Metrics and Benchmarks: Methods to evaluate and benchmark LLM performance.
+- [x] :star: Hands-On: Training a mini Transformer model and experimenting with GPT-2 for text generation.
 
 #### Module 3: "Advanced LLM Techniques"
-- [ ] Training Process and Scaling Laws: Understand how LLMs are trained and the laws governing their scaling.
-- [ ] PEFT: Learn Parameter-Efficient Fine-Tuning methods.
-- [ ] LoRA: Introduction to Low-Rank Adaptation.
-- [ ] QLoRA: Exploring Quantized Low-Rank Adaptation.
+- [x] Training Process and Scaling Laws: Understand how LLMs are trained and the laws governing their scaling.
+- [x] PEFT: Learn Parameter-Efficient Fine-Tuning methods.
+- [x] LoRA: Introduction to Low-Rank Adaptation.
 - [ ] Instruction Tuning: Techniques for fine-tuning models using instructions.
 - [ ] RLHF: Reinforcement Learning from Human Feedback and its applications.
-- [ ] Evaluation Metrics and Benchmarks: Methods to evaluate and benchmark LLM performance.
-- [ ] Beyond Prompting: Understanding Frameworks such as DSPY
+- [ ] OpenSource vs Commercial LLMs: Comparison between open-source and commercial LLM solutions.
 - [ ] :star: Hands-On:
     - [ ] Fine-tuning a pre-trained model using different methods and evaluating it with standard benchmarks.
-    - [ ] Handson with DSPY
 
 #### Module 4: "Operationalizing LLMs"
-- [ ] OpenSource vs Commercial LLMs: Comparison between open-source and commercial LLM solutions.
 - [ ] Prompt Engineering: Crafting effective prompts to get desired outputs.
 - [ ] RAGs: Techniques for retrieval-augmented generation.
 - [ ] Vector Databases: Using vector databases for efficient data retrieval.
 - [ ] Chunking and Ingesting Documents: Methods for processing and ingesting documents.
+- [ ] Beyond Prompting: Understanding Frameworks such as DSPY
 - [ ] Securing LLMs
 - [ ] Prompt Hacking and Backdoors
 - [ ] Defensive Measures
 - [ ] :star: Hands-On:
     - [ ] Implementing basic prompt engineering techniques and
     - [ ] Building a simple RAG system.
+    - [ ] Handson with DSPY
 
 #### Module 5: "The Future of LLMs and Next Steps"
 - Multi-modal: Integration of different data modalities in LLMs.
