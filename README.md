@@ -20,11 +20,11 @@
 - [x] Training Process and Scaling Laws: Understand how LLMs are trained and the laws governing their scaling.
 - [x] PEFT: Learn Parameter-Efficient Fine-Tuning methods.
 - [x] LoRA: Introduction to Low-Rank Adaptation.
-- [ ] Instruction Tuning: Techniques for fine-tuning models using instructions.
-- [ ] RLHF: Reinforcement Learning from Human Feedback and its applications.
-- [ ] OpenSource vs Commercial LLMs: Comparison between open-source and commercial LLM solutions.
-- [ ] :star: Hands-On:
-    - [ ] Fine-tuning a pre-trained model using different methods and evaluating it with standard benchmarks.
+- [x] Instruction Tuning: Techniques for fine-tuning models using instructions.
+- [x] RLHF: Reinforcement Learning from Human Feedback and its applications.
+- [x] :star: Hands-On:
+    - [x] Instruction Tuning: Text 2 SQL using LLaMA3.1
+    - [x] RLHF Hands-on: Sentiment aligment for generating movie reviews
 
 #### Module 4: "Operationalizing LLMs"
 - [ ] Prompt Engineering: Crafting effective prompts to get desired outputs.
