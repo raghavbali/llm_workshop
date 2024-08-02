@@ -21,6 +21,11 @@ scikit-learn = "^1.5.1"
 scipy = "1.12"
 scienceplots = "^2.1.1"
 fasttext = "^0.9.3"
+datasets = "^2.20.0"
+accelerate = "^0.33.0"
+peft = "^0.12.0"
+trl = "^0.9.6"
+tensorboardx = "^2.6.2.2"
 
 
 [build-system]
