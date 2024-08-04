@@ -27,18 +27,15 @@
     - [x] RLHF Hands-on: Sentiment aligment for generating movie reviews
 
 #### Module 4: "Operationalizing LLMs"
-- [ ] Prompt Engineering: Crafting effective prompts to get desired outputs.
-- [ ] RAGs: Techniques for retrieval-augmented generation.
-- [ ] Vector Databases: Using vector databases for efficient data retrieval.
-- [ ] Chunking and Ingesting Documents: Methods for processing and ingesting documents.
-- [ ] Beyond Prompting: Understanding Frameworks such as DSPY
-- [ ] Securing LLMs
+- [x] Prompt Engineering: Crafting effective prompts to get desired outputs.
 - [ ] Prompt Hacking and Backdoors
-- [ ] Defensive Measures
+- [x] Vector Databases: Using vector databases for efficient data retrieval.
+- [x] RAGs: Techniques for retrieval-augmented generation.
+- [-] Beyond Prompting: Understanding Frameworks such as DSPY
 - [ ] :star: Hands-On:
-    - [ ] Implementing basic prompt engineering techniques and
-    - [ ] Building a simple RAG system.
-    - [ ] Handson with DSPY
+    - [x] Implementing basic prompt engineering techniques and
+    - [x] Building a simple RAG system.
+    - [-] Handson with DSPY
 
 #### Module 5: "The Future of LLMs and Next Steps"
 - Multi-modal: Integration of different data modalities in LLMs.
