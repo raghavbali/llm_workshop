@@ -3,6 +3,13 @@
 > [!IMPORTANT]
 > :dart: [DataHack Summit 2024](https://www.analyticsvidhya.com/datahacksummit/workshops/unleashing-llms-training-finetuning-and-evaluating) | :calendar: August 10 2024 | :round_pushpin: Bengaluru, India
 
+Explore this comprehensive repository on LLMs, covering everything from the basics of NLP to fine-tuning and even RLHF. If you find the resources helpful, consider giving it a star ⭐ to show your support and help others discover it.
+
+## Table of Contents
+- [Modules](#modules)
+- [Prerequisites](#prerequisites)
+- [Environment Setup](#environment-setup-instructions)
+
 ### Modules
 #### Module 1: "Foundations of Generative AI and Language Models"
 - [x] Overview of Generative AI and the basics of language modeling.
@@ -49,9 +56,7 @@
 
 ---
 
-
-> [!Note]
-> Prerequisites
+### Prerequisites
 - Basics/hands-on experience of working with python
 - Basic understanding of linear algebra and machine larning
 - Basic understanding of Deep Neural Networks
