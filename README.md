@@ -31,11 +31,11 @@
 - [ ] Prompt Hacking and Backdoors
 - [x] Vector Databases: Using vector databases for efficient data retrieval.
 - [x] RAGs: Techniques for retrieval-augmented generation.
-- [-] Beyond Prompting: Understanding Frameworks such as DSPY
-- [ ] :star: Hands-On:
+- [x] Beyond Prompting: Understanding Frameworks such as DSPY
+- [x] :star: Hands-On:
     - [x] Implementing basic prompt engineering techniques and
     - [x] Building a simple RAG system.
-    - [-] Handson with DSPY
+    - [x] Handson with DSPY
 
 #### Module 5: "The Future of LLMs and Next Steps"
 - Multi-modal: Integration of different data modalities in LLMs.
