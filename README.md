@@ -28,7 +28,7 @@
 
 #### Module 4: "Operationalizing LLMs"
 - [x] Prompt Engineering: Crafting effective prompts to get desired outputs.
-- [ ] Prompt Hacking and Backdoors
+- [x] Prompt Hacking and Backdoors
 - [x] Vector Databases: Using vector databases for efficient data retrieval.
 - [x] RAGs: Techniques for retrieval-augmented generation.
 - [x] Beyond Prompting: Understanding Frameworks such as DSPY
