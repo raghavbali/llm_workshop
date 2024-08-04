@@ -3,6 +3,15 @@
 > [!IMPORTANT]
 > :dart: [DataHack Summit 2024](https://www.analyticsvidhya.com/datahacksummit/workshops/unleashing-llms-training-finetuning-and-evaluating) | :calendar: August 10 2024 | :round_pushpin: Bengaluru, India
 
+> Explore this comprehensive repository on LLMs, covering everything from the basics of NLP to fine-tuning and even RLHF. If you find the resources helpful, consider giving it a star ⭐ to show your support and help others discover it.
+---
+## Table of Contents
+- [Modules](#modules)
+- [Prerequisites](#prerequisites)
+- [Environment Setup](#environment-setup-instructions)
+
+---
+
 ### Modules
 #### Module 1: "Foundations of Generative AI and Language Models"
 - [x] Overview of Generative AI and the basics of language modeling.
@@ -28,14 +37,14 @@
 
 #### Module 4: "Operationalizing LLMs"
 - [x] Prompt Engineering: Crafting effective prompts to get desired outputs.
-- [ ] Prompt Hacking and Backdoors
+- [x] Prompt Hacking and Backdoors
 - [x] Vector Databases: Using vector databases for efficient data retrieval.
 - [x] RAGs: Techniques for retrieval-augmented generation.
-- [-] Beyond Prompting: Understanding Frameworks such as DSPY
-- [ ] :star: Hands-On:
+- [x] Beyond Prompting: Understanding Frameworks such as DSPY
+- [x] :star: Hands-On:
     - [x] Implementing basic prompt engineering techniques and
     - [x] Building a simple RAG system.
-    - [-] Handson with DSPY
+    - [x] Handson with DSPY
 
 #### Module 5: "The Future of LLMs and Next Steps"
 - Multi-modal: Integration of different data modalities in LLMs.
@@ -49,9 +58,7 @@
 
 ---
 
-
-> [!Note]
-> Prerequisites
+### Prerequisites
 - Basics/hands-on experience of working with python
 - Basic understanding of linear algebra and machine larning
 - Basic understanding of Deep Neural Networks

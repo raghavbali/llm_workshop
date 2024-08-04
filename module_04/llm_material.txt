@@ -1,0 +1,468 @@
+module_01_03_explore_transformers	## Exploring Transformer Architectures ## The RNN Limitation
+The RNN layer (LSTM, or GRU, etc.) takes in a context window of a defined size as input and encodes all of it into a single vector. This bottleneck vector needs to capture a lot of information in itself before the decoding stage can use it to start generating the next token. To enhance performance of sequence to sequence tasks a typical Encoder-Decoder architecture is the go-to choice.
+
+<img src="./assets/encoder_decoder_notebook_3.png">
+
+Let us consider the case of **Machine Translation**, i.e. translation of English to Spanish (or any other language).
+
+In a typical __Encoder-Decoder__ architecture, the Encoder takes in the input text in English as input and prepares a condensed vector representation of the whole input. Typically termed as bottleneck features. The Decoder then uses these features to generate the translated text in Spanish.
+
+While this architecture and its variants worked wonders, they had issues. Issues such as inability handle longer input sequences, cases where there is not a one to one mapping between input vs output language and so on.
+
+To handle these issues, __Vasvani et. al.__ in their now famouly titled paper __Attention Is All You Need__ build up on the concepts of attention. The main highlight of this work was the Transformer architecture. Transformers were shown to present state of the art results on multiple benchmarks without using any recurrence or convolutional components. ## Language Modeling
+By far the most widely used application from the NLP world is language modeling. We use it daily on our phone keyboards, email applications and a ton of other places.
+
+In simple words, a language model takes certain text as input context to generate the next set of words as output. This is interesting because a language model tries to understand the input context, the language structure (though in a very naive way) to predict the next word(s). We use it in the form of text completion utilities on search engines, chat platforms, emails etc. all the time. Language models are a perfect real life application of NLP and showcase the power of RNNs.
+
+Language models can be developed train in different ways. The most common and widely used method is the sliding window approach. The model takes a small window of text as input and tried to predict the next word as the output. The following figure illustrates the same visually.
+
+<img src="./assets/lm_training_notebook_3.png"> ### PreTrained GPT2 for Text Generation ## Transformers
+- The transformer architecture was presented in the seminal paper __Attention is All You Need__ by Vaswani et al. back in 2017
+- A transformer is a __recurrence-__ and __convolution-free__ attention-based encoder-decoder architecture
+- Introduced the concept of multi-head attention and positional encodings
+- Also revolutionalised Computer Vision domain (see ViT)
+
+
+<img src="./assets/transformer_arch_notebook_3.png"> ## Attention is All you Need ⚠️
+
+
+### Attention to the Rescue
+Attention is one of the most powerful concepts in the deep learning space that really changed the game. The core idea behind the attention mechanism is to make use of all interim hidden states of the RNN to decide which one to focus upon before it is used by the decoding stage. 
+
+### Contextual Embeddings
+The [TagLM architecture by Peters et al. in 2017](https://arxiv.org/abs/1705.00108) was one of the first works that provided an insight into how we could combine __pre-trained word embeddings__ with a __pre-trained neural language model__ to generate __context-aware embeddings__ for downstream NLP tasks.
+
+The big breakthrough that changed the NLP landscape came in the form of __ELMo, or Embeddings from Language Models__. The ELMo architecture was presented by Peters et al. in their work titled [__Deep Contextualized Word Representations in 2018__](https://arxiv.org/abs/1802.05365). Without going into too much detail, the main highlights of the ELMo architecture were:
+
+- The model used a bi-LSTM-based language model.
+- Character CNNs were used to generate embeddings, in place of pre-trained word vectors, which made use of huge 4096 LSTM units but transformed into smaller 512-sized vectors using feedforward layers.
+- The main innovation was to make use of all the hidden bi-LSTM layers for generating input representation. Unlike previous works, where only the final LSTM layer was used to fetch the representation of the input, this work took a weighted average of all the hidden layers' hidden states. This helped the model learn contextual word embeddings where each layer contributed to things like syntax and semantics.
+
+### Self-Attention
+- Self-attention was proposed by Cheng et al. in their paper titled Long Short-Term Memory Networks for Machine Reading in 2016
+- Self-attention enables a model to learn the correlation between the current token (character or word or sentence, etc.) and its context window. In other words, it is an attention mechanism that relates different positions of a given sequence so as to generate a representation of the same sequence
+
+### Multi-head Attention
+- Multi-head attention extends the self-attention mechanism by performing multiple parallel self-attention operations, each focusing on different learned linear projections of the input. Multiple attention heads allow the model to capture different types of relationships and learn more fine-grained representations (eg: grammar, context, dependency, etc.)
+
+<img src="./assets/multihead_attention_notebook_3.png">
+
+> Source: [Vasvani et. al.](https://arxiv.org/pdf/1706.03762.pdf) ### Positional Encoding
+Positional encoding is a technique used to incorporate the position of each token in the input sequence. It provides the model with information about the token's position without relying solely on the order of tokens.
+This additional aspect was required because transformers do not have the natural sequential setup of RNNs. In order to provide positional context, any encoding system should ideally have the following properties:
+
+- It should output a unique encoding for each time-step (word’s position in a sentence)
+- Distance between any two time-steps should be consistent across sentences with different lengths.
+- Our model should generalize to longer sentences without any efforts. Its values should be bounded.
+- It must be deterministic.
+
+<img src="./assets/positional_emb_notebook_3.png">
+
+
+
+### References
+- [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) ## BERT-ology
+- BERT, or __[Bi-Directional Encoder Representations from Transformers](https://arxiv.org/abs/1810.04805)__, was presented by Devlin et al., a team at Google AI in 2018
+- Multi-task Learning: BERT also helped push the transfer-learning envelope in the NLP domain by showcasing how a pre-trained model can be fine-tuned for various tasks to provide state-of-the-art performance
+- BERT tweaked the usual Language Model objective to only predict next token based on past context by building context from both directions, i.e. the objective of predicting masked words along with next sentence prediction.
+
+
+<img src="./assets/bert_models_layout_notebook_3.jpeg">
+
+> source [PLM Papers](https://github.com/thunlp/PLMpapers) ### Predicting the Masked Token
+This was a unique objective when BERT was originally introduced as compared to usual NLP tasks such as classification. The objective requires us to prepare a dataset where we mask a certain percentage of input tokens and train the model to learn to predict those tokens. This objective turns out to be very effective in helping the model learn the nuances of language. 
+
+In this first task we will test the pre-trained model against this objective itself. The model outputs a bunch of things such as the predicted token, encoded index of the predicted token/word along with a score which indicates the model's confidence. ### Question Answering
+This is an interesting NLP task and quite complex one as well. For this task, the model is provided input consisting of the context along with a question and it predicts the answer by selecting text from the context. The training setup for this task is a bit involved process, the following is an overview:
+- The training input as triplet of context, question and answer
+- This is transformed as combined input of the form ``[CLS]question[SEP]context[SEP]`` or ``[CLS]contex[SEP]question[SEP]`` with answer acting as the label
+- The model is trained to predict the start and end indices of the the corresponding answer for each input.
+
+
+For our current setting, we will leverage both _pretrained_ and _fine-tuned_ versions of **DistilBERT** via the _question-answering_ pipeline and understand the performance difference. # Generative Pretraining ## Behold, its GPT (Generative pre-training)
+
+The first model in this series is called GPT, or Generative Pre-Training. It was released in [2018](https://openai.com/blog/language-unsupervised/), about the same time as the BERT model. The paper presents a task-agnostic architecture based on the ideas of transformers and unsupervised learning.
+
+- GPT is essentially a language model based on the __transformer-decoder__ 
+- Introduction of large training datasets: __BookCorpus__ dataset contains over 7,000 unique, unpublished books across different genres
+- The GPT architecture makes use of 12 decoder blocks (as opposed to 6 in the original transformer) with 768-dimensional states and 12 self-attention heads each.
+
+
+### GPT-2
+- Radford et al. presented the GPT-2 model as part of their work titled [Language Models are Unsupervised Multi-task Learners in 2019](https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)
+- The model achieves state-of-the-art performance in a few-shot setting
+- Similar to GPT, the secret sauce for GPT-2 is its dataset. The authors prepared a massive 40 GB dataset by crawling 45 million outbound links from a social networking site called Reddit.
+- The vocabulary was also expanded to cover 50,000 words and the context window was expanded to 1,024 tokens (as compared to 512 for GPT).
+
+
+### GPT-3
+- OpenAI published paper titled [Language Models are Few Shot Learners](https://arxiv.org/abs/2005.14165) in May 2020. 
+- This paper introduces the mammoth __175 billion-parameter GPT-3 model__.
+- Apart from more layers and parameters, this model made use of sparse attention
+- Dataset again played a key role, a 300 billion-token dataset based on existing datasets like Common Crawl (filtered for better content), WebText2 (a larger version of WebText used for GPT-2), Books1 and Books2, and the Wikipedia dataset was prepared for this model
+module_01_02_getting_started	# Getting Started : Text Representation
+<img src="./assets/banner_notebook_1.jpg">
+
+
+The NLP domain wasn't always this buzzing with __attention__ and hype that we see today. 
+The recent progress in this field is built on top of years of amazing work and research. Before we leap onto the current state of things, let us have a quick walk through of how we arrived here. The current NLP systems are standing tall and promising on the shoulders of very solid work from past decades
+ ## Import Required Libraries
+
+<a target="_blank" href="https://colab.research.google.com/github/raghavbali/llm_workshop/blob/main/module_01/02_getting_started.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a> Let's compute document frequency for each word to start with.
+We can represent it as tensor of size vocab_size. We will limit the number of documents to N=1000 to speed up processing. For each input sentence, we compute the set of words (represented by their numbers), and increase the corresponding counter: ### Word Embeddings
+A word embedding is a learned dense representation of text. In this approach we represent words and documents as dense vectors that have distinct lexical properties. This can be considered as one of the key breakthroughs in the fielf of NLP.
+
+Let us briefly:
+
+- Understand the Word2Vec models called Skipgram and CBOW ### Word2Vec
+
+This model was created by [Mikolov et. al at Google in 2013](https://arxiv.org/abs/1301.3781). It is a predictive deep learning model designed to compute and generate high quality, distributed and continuous dense vector representations of words, which capture contextual and semantic similarity. Essentially these are unsupervised models which can be trained on massive textual corpora, create a vocabulary of possible words and generate dense word embeddings for each word in the vector space representing that vocabulary.
+
+There are two different model architectures which can be leveraged by Word2Vec to create these word embedding representations. These include,
+
+- The Continuous Bag of Words (CBOW) Model
+- The Skip-gram Model ## Continuous Bag of Words (CBOW) Model
+The CBOW model architecture tries to predict the current __`target word`__ (the center word) based on the __`source context words`__ (surrounding words).
+
+Considering a simple sentence, “the quick brown fox jumps over the lazy dog”, this can be pairs of (context_window, target_word) where if we consider a context window of size 2, we have examples like __([quick, fox], brown)__, __([the, brown], quick)__, __([the, dog], lazy)__ and so on.
+
+Thus the model tries to predict the target_word based on the context_window words.
+
+<img src="./assets/cbow_arch_notebook_1.png"> ### Skip-gram Model
+The Skip-gram model architecture usually tries to achieve the reverse of what the CBOW model does. It tries to predict the __`source context words`__ (surrounding words) given a __`target word`__ (the center word).
+
+Considering our simple sentence from earlier, “the quick brown fox jumps over the lazy dog”. If we used the CBOW model, we get pairs of (context_window, target_word) where if we consider a context window of size 2, we have examples like __([quick, fox], brown)__, __([the, brown], quick)__, __([the, dog], lazy)__ and so on.
+
+Now considering that the skip-gram model’s aim is to predict the context from the target word, the model typically inverts the contexts and targets, and tries to predict each context word from its target word. Hence the task becomes to predict the context [quick, fox] given target word ‘brown’ or [the, brown] given target word ‘quick’ and so on.
+
+Thus the model tries to predict the context_window words based on the target_word.
+
+<img src="./assets/skipgram_arch_notebook_1.png"> ## Gensim Framework
+
+The ``gensim`` framework, created by Radim Řehůřek consists of a robust, efficient and scalable implementation of the __Word2Vec__ model. We will leverage the same on our sample toy corpus. In our workflow, we will tokenize our normalized corpus and then focus on the following four parameters in the Word2Vec model to build it.
+
+- vector_size: The word embedding dimensionality
+- window: The context window size
+- min_count: The minimum word count
+- sample: The downsample setting for frequent words
+- sg: Training model, 1 for skip-gram otherwise CBOW
+
+We will build a simple Word2Vec model on the corpus and visualize the embeddings. ## Similar and Improved Works 
+- [GloVe](https://nlp.stanford.edu/pubs/glove.pdf)
+- [FastText](https://arxiv.org/pdf/1607.04606.pdf)
+- [Sent2Vec](https://arxiv.org/abs/1405.4053)
+- X2Vec ### Limitations
+One key limitation of traditional pretrained embedding representations such as Word2Vec is the problem of word sense and removing ambiguity by making them clear. While pretrained embeddings can capture some of the meaning of words in context, every possible meaning of a word is encoded into the same embedding. This can cause problems in downstream models, since many words such as the word 'play' have different meanings depending on the context they are used in.
+
+For example, the word 'play' in these two different sentences have quite different meaning:
+
+- I went to a **play** at the theatre.
+- John wants to **play** with his friends.
+The pretrained embeddings above represent both meanings of the word 'play' in the same embedding. To overcome this limitation, we need to build embeddings based on the language model, which is trained on a large corpus of text, and knows how words can be put together in different contexts. ### Get Text
+__The Gutenberg Project__ is an amazing project aimed at providing free access to some of the world's most amazing classical works. This makes it a wonderful source of textual data for NLP practitionars to use and improve their understanding of textual data. Ofcourse you can improve your litrary skills too 
+
+For this module and workshop in general we will make use of materials available from the project. We begin by downloading the book __"The Adventures of Sherlock Holmes by Arthur Conan Doyle"__
+
+
+<img src="./assets/img_2_notebook_1.jpg"> ### Load Data ### Text Representation
+
+Feature Engineering is often known as the secret sauce to creating superior and better performing machine learning models. Just one excellent feature could be your ticket to winning a Kaggle challenge! The importance of feature engineering is even more important for unstructured, textual data because we need to convert free flowing text into some numeric representations which can then be understood by machine learning algorithms.
+
+Since text is mostly available in unstructured form yet very high in dimensionality (how??? :sweat: ), the ability to represent text in the most appropriate way is one of the key ingredients to work in this domain.
+
+
+Let us understand the current dataset at hand by checking the obvious aspects of a textual dataset ### Tokenize and Vectorize
+To leverage different algorithms we convert text into numbers that can be represented as tensors.
+
+The first step is to convert text to tokens - tokenization. If we use word-level representation, each word would be represented by its own token. We will use build-in tokenizer from torchtext module Now, to convert text to numbers, we will need to build a vocabulary of all tokens. ### Text as Vector
+
+``torchtext`` ``vocab.stoi`` dictionary allows us to convert from a string representation into numbers (``stoi`` -> "from string to integers).
+
+To convert the text back from a numeric representation into text, we can use the ``vocab.itos`` dictionary to perform reverse lookup: ### Bag Of Words Representation
+
+Bag of Words (BoW) representation is a traditional vector representation of text for NLP tasks. Each word/character is linked to a vector index, vector element contains the number of occurrences of a word/character in a given document.
+ ### TF-IDF
+
+TF-IDF stands for term frequency–inverse document frequency. It is a form of bag of words representation, where instead of a **binary value** indicating the appearance of a word in a document, a floating-point value is used, which is related to the frequency of word occurrence in the corpus.
+
+The formula to calculate TF-IDF is:
+
+$w_{ij}=tf_{ij}* \log(\frac{N}{df_i})$
+
+Where:
+
+- $i$ is the word
+- $j$ is the document
+- $w_{ij}$ is the weight or the importance of the word in the document
+- $tf_{ij}$ is the number of occurrences of the word i in the document j, i.e. the BoW value we have seen before
+- $N$ is the number of documents in the collection
+- $df_i$ is the number of documents containing the word i in the whole collection.
+
+
+TF-IDF value $w_{ij}$ increases proportionally to the number of times a word appears in a document and is offset by the number of documents in the corpus that contains the word, which helps to adjust for the fact that some words appear more frequently than others. For example, if the word appears in every document in the collection, $df_i=N$, and $w_{ij}=0$, and those terms would be completely disregarded.
+module_02_02_simple_text_generator	# Text Generation <a target="_blank" href="https://colab.research.google.com/github/raghavbali/llm_workshop/blob/main/module_02/03_simple_text_generator.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a> ## Get Data
+We will fine-tune a pre-trained model GPT-2 model on our earlier dataset itself. But wait, what do you mean pre-trained? ## Foundation & Pre-trained Models
+
+**Foundation models** are the models that are trained from scratch on a large corpus of data. In the context of NLP, these models are designed to learn the fundamental patterns, structures, and representations of natural language. Foundation models are typically trained using unsupervised learning objectives, such as language modeling or autoencoding, where the model predicts the next word in a sentence or reconstructs the original sentence from a corrupted version/masked version.
+Models such as GPT, BERT, T5, etc are typical examples of Foundation Models
+
+
+Instances of foundation models that have been trained on specific downstream tasks or datasets are termed as **Pre-Trained Models**. Pretrained models leverage the knowledge learned from foundation models and are fine-tuned on task-specific data to perform well on specific NLP tasks, such as text classification, named entity recognition, machine translation, sentiment analysis, etc. ## Prepare Dataset ## Setup Model Object ## Save the Model ## Decoding Strategies
+
+The ``generate()`` utility we used above used every output prediction as input for the next time step. This method of using the highest probability prediction as output is called __Greedy Decoding__. Greeding decoding is fast and simple but is marred with issues we saw in samples we just generated.
+
+Focusing on only highest probability output narrows our model's focus to just the next step which inturn may result in inconsistent or non-dictionary terms/words.
+
+### Beam Search
+Beam search is the obvious next step to improve the output predictions from the model. Instead of being greedy, beam search keeps track of n paths at any given time and selects the path with overall higher probability.
+
+<img src="./assets/beamsearch_nb_2.png">
+
+### Other Key Decoding Strategies:
+- Sampling
+- Top-k Sampling
+- Nucleus Sampling
+
+### Temperature
+Though sampling helps bring in required amount of randomness, it is not free from issues. Random sampling leads to gibberish and incoherence at times. To control the amount of randomness, we introduce __temperature__. This parameter helps increase the likelihood of high probability terms reduce the likelihood of low probability ones. This leads to sharper distributions. 
+
+> High temperature leads to more randomness while lower temperature brings in predictability.
+ ## Limitations and What Next?
+- Long Range Context
+- Scalability
+- Instruction led generation
+- Benchmarking
+- Halucination / Dreaming
+ 
+module_03_02_instruction_tuning_llama_t2sql	# Instruction Tuning with Optimizations
+
+Instruction tuning is form of fine-tuning that enhances a model's ability to generalize across diverse tasks. This concept is particularly useful in making models more adaptable and efficient in understanding and executing new instructions, even those they haven't been explicitly trained on.
+
+## Ok, But What is Instruction Tuning?
+
+Instruction tuning differs from supervised fine-tuning (SFT) approach primarily in the nature of the training data. While both methods involve training on **input-output** pairs, instruction tuning adds a critical layer: **instructions**. This additional context helps the model understand the task it is being asked to perform, leading to improved generalization to unseen tasks. Also, as we will see in this notebook, one of the ways of doing instruction tuning helps us skip the trouble of designing task specific heads or loss functions!
+
+### Key Differences:
+- **Supervised Fine-Tuning**: Trains models using input examples and their corresponding outputs.
+- **Instruction Tuning**: Augments the input-output pairs with instructions, enhancing the model's ability to generalize to new tasks.
+
+### Example
+
+**Supervised Fine-Tuning**:
+- **Input**: "Translate this sentence to French: 'The cat is on the mat.'"
+- **Output**: "Le chat est sur le tapis."
+
+**Instruction Tuning**:
+- **Instruction**: "Translate the following sentence to French."
+- **Input**: "The cat is on the mat."
+- **Output**: "Le chat est sur le tapis."
+
+By incorporating instructions, the model gains a better understanding of the task, leading to more robust performance across a wider range of tasks.
+
+In this notebook, we will go deeper into the mechanics of instruction tuning and tune our own model.
+
+
+We covered a few optimization techniques such as **Quantization** and **LoRA** in the previous notebook, here we will leverage those techniques to perform instruction tuning of the latest Llama 3.1 (or Llama 2 if you do not have access yet) to **convert natual language text** to ``SQL``
+
+
+> Note: This notebook, even though optimized, does not work on colab for LLaMA 3.1 but LLaMA 2 fits on colab T4
+
+> Built with Llama ❤ ## Environment Setup ### Fine-Tuning Configs ### Training Setup Configs ## Load base model ## Load LLaMA tokenizer ## Set training parameters ## Set Supervised Fine-Tuning Parameters ## Time to Fine Tune our T2SQL LLaMA ## Save T2SQL Model ## Let Us Convert Some Text to SQL ### Apply LoRA Adaptors ## Import Packages ## Notebook Configurations ### Model and Dataset Configs ## Dataset Preparation ### What is LLaMA again?
+![image.png](attachment:e3788531-f870-4fff-ae56-6427a3a5d9a6.png)
+
+**[LLaMA (Large Language Model Meta AI)](https://ai.meta.com/blog/large-language-model-llama-meta-ai/)**, is a state-of-the-art foundational large language model designed to help researchers advance their work in this subfield of AI. Smaller, more performant models such as LLaMA enable others in the research community who don’t have access to large amounts of infrastructure to study these models, further democratizing access in this important, fast-changing field.
+Within this series, Meta has released several versions of different sizes. They have progressively improved in their performance while adjusting how the inputs and prompt formats work.
+
+This notebook works for two smaller sized LLaMAs, version 2-7B and 3.1-8B. 
+
+### General Format for Instructions for LLaMA Models
+**LLaMA 2** :
+```
+[INST]<<SYS>>{system text}<</SYS>>
+{user text}[/INST]
+{assistant response}
+```
+
+**LLaMA 3.1**:
+```
+<|start_header_id|>system<|end_header_id|>
+{system text}
+<|eot_id|>\n<|start_header_id|>user<|end_header_id|>
+{user text}<|eot_id|>
+<|start_header_id|>assistant<|end_header_id|>
+{assistant response}
+...
+```
+
+We will leverage these formats to prepare our **Instruction Dataset**. ## Configurations ### Quantization ### QLoRA
+module_03_01_llm_training_and_scaling	# Scaling Neural Nets and Efficient Training
+
+We have covered quite some ground in previous 2 modules and observed the steady increase in size and performance of the models. These gains come at huge cost, actual money and human labour apart from time researching and building these things. Can we estimate these costs and draw some insights about model sizes, datasets and comput requirements? ## Estimating Compute Costs
+> Back of the Envelope Calculations : A quick way to get rough estimates
+
+
+**[LLaMA 3.1](https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md)** from Meta.AI launched very recently. The model is available in 8B, 70B and 405B sizes and is outperforming a number of existing LLMs on various benchmarks. 
+
+![image.png](attachment:08264d12-83d1-45ac-8664-90c3f5af5ad6.png) ## So Should We Just Keep Growing?
+
+**TL;DR**: Probably not! 
+
+**Long Answer**: In their work titled [Training Compute-Optimal Large Language Models](https://arxiv.org/pdf/2203.15556) Hoffman et. al. build upon the previous works to showcase that current(_2022_) set of models are **significantly under trained** or the current set of LLMs are far too large for their compute budgets and datasets!
+
+They present a 70B parameter model titled **Chincilla** which was:
+- 4x smaller than 280B parameter Gopher
+- trained on 4x more data than Gopher, 1.3T tokens vs 300B tokens
+
+and yet **outperformed** Gopher on every task they evaluated!
+
+<img src="./assets/chinchilla.png">
+
+> Source: [Hoffman et. al.](https://arxiv.org/pdf/2203.15556)
+> Fine-print: Though undertrained, LLMs increasingly show performance improvement with increasing dataset size ## Ok, So I have a lot of Compute, What's the Problem?
+
+The scaling laws are all good for BigTech, but you could say that most companies have a lot of compute available. Where is the problem? Let us understand this with a simple example walk through
+
+Assumptions/Setup:
+- System RAM (CPU): 32GB
+- GPU RAM : 32 GB
+- Model Size : 20B
+- Parameter Size: 2bytes 
+This is good for inference but we need to train/fine-tune this model.
+We need to accomodate for:
+- **Gradients/backpropagation** : Size same as model size
+- **Optimizer States** (ex: ADAM needs momentum and variance, can't be FP16): typically 12x of model size We need more memory (and faster GPUs). But just by usual scaling we would need: ## Can We Bring Some Efficiencies? Please? Yes, luckily researchers have been exploring efficient ways of training and fine-tuning models to democratise availability of such models across a broader spectrum (and lower the environmental impact as well, yay!!!)
+
+We will focus on three key main efficiencies under the umbrella of **P**arameter **E**fficient **F**ine **T**uning paradigm:
++ Quantization
++ Additive PEFT
+    + Soft Prompting
++ Reparameterization
+    + LoRA
+ 
+There are other techniques as well, such as, LoHa, LoKr, IA3, P-Tuning and more. While effective, the basic ideas are similar to what we will cover next. ### Quantization #### Basic Idea
+- The basic idea is to limit the number of bits/bytes needed to store our weights/parameters/matrix-cell values.
+- By default we store weights as high-precision floats in float32 or even float64 occupying enormous amounts of space (disk/memory).
+- Can we be smart and store those values without consuming all 32 or 64 bits?
+
+#### Let us understand this with a very simplified example:
+
+<img src="./assets/quantization.png"> ### Additive PEFT Additive PEFT works by adding new tunable layers to the model and train only those during fine-tuning while keeping the base model weights frozen. 
+
+But how do we do this?
+
+#### Soft Prompting
+- This technique involves introducing **task specific tokens** or **virtual tokens** to the model's input space
+- The virtual tokens are not part of the actual vocabulary of the model and only specify the task.
+- The dimensionality of virtual tokens is same as the input token embedding size
+- During finetuning the base model weights are frozen and only virtual token embedding layer is trained/updated.
+- Supports Mix-task Batch Fine-Tuning and hence no need for separate heads
+- Setup is similar to prefix tuning technique
+
+#### Overview of Soft Prompting
+
+<img src="./assets/soft_prompting_1.png">
+
+---
+
+<img src="./assets/soft_prompting_2.png">
+
+---
+
+This technique is shown to be better/efficient and more stable than **manual prompting**.
+<img src="./assets/soft_prompting_perf.png">
+
+> Source: https://arxiv.org/pdf/2104.08691
+ ## But how much does it cost to train such model(s)?
+<img src="./assets/cost_tweet.png">
+
+> Source: https://x.com/deedydas/status/1629312480165109760
+
+__Assumptions__
+For the sake of our understanding, we will make the following assumptions:
+- Ignore costs associated with preparing datasets
+- Ignore costs associated with training restarts, infra-failures, etc.
+- Cost of forward and backward pass is set to 1
+- Assume a very simplified view of overhead associated with multi-GPU/multi-node clusters by setting a standard efficiency ratio (ex: 0.25 efficiency in terms of TFLOPs) ### Reparametrization
+This technique smartly leverages matrix decomposition to bring efficiencies. Basically during fine-tuning:
+- we freeze the base model weights and
+- during the backward pass, we decompose the **weight update matrix** ($W_\delta$) into two lower rank matrices $W_a$ and $W_b$ of rank $r$
+- This helps in achieving 100 to 1000x reduction in weights to be updated.
+
+The following illustration explains the same:
+<img src="./assets/lora_1.png"> > qLoRA combines the improvements of quantization to LoRA thus leading to even further improvements ### Model Parameters
+- Model Size : 405 **B**illion
+- Training Dataset : 15 **T**rillion ### Compute Required  ### GPU Performance and Compute Time ### Cost of Training ## Big but How Big?
+
+The latest and the greatest seem to be a thing only the _GPU-rich_ can afford to play with. The exponential increase in the size of models along with their training datasets (we saw GPT vs GPT2 vs GPT3.5 in the previous module) indicates scale is our best friend. 
+
+Work by Kaplan et. al. in the work titled **[Scaling Laws for Neural Language Models](https://arxiv.org/pdf/2001.08361)** presents some interesting takeaways. 
+We will use the notation from paper as:
+- **$N$**: Model parameters excluding embeddings
+- **$D$**: Size of the dataset
+- **$C$**: Compute used for training the model
+
+_Scale is a function of $N$, $D$ and $C$_
+
+
+Let's look at some of the insights from the paper: 1. Performance depends **strongly on scale** and weakly on model shape
+2. Performance improves predictably as long as we **scale up** **$N$** and **$D$** : 
+_Every time we increase model size 8x, we only need to increase the dataset by roughly 5x_
+3. Large Models are more **sample efficient** than small models reaching same level of performance with fewer steps and fewer data points <img src="./assets/scaling_laws.png">
+
+> Source: [Kaplan et. al.](https://arxiv.org/pdf/2001.08361)
+module_03_03_RLHF_phi2	# Quick Overview of RLFH
+
+The performance of Language Models until GPT-3 was kind of amazing as-is. What the models of were essentially lacking was the aspect of **alignment**. The language generation aspect was particularly challenging due to heavy hallucinations, toxicity, etc.
+
+The authors of the seminal work **[InstructGPT](https://arxiv.org/pdf/2203.02155)** basically focussed on this aspect of aligning the language models to user's intructions (hence the name!). Their work showcased how we can further fine-tune such models in a supervised way leverage human feedback and reinforcement learning to align them.
+
+## High-Level Overview of the Setup
+
+<img src="./assets/instruct_gpt_rlhf.png">
+
+> Source: https://arxiv.org/pdf/2203.02155 ## Key Concepts:
+
+- **Reinforcement Learning (RL)**: A machine learning paradigm where an agent learns to make decisions by performing actions and receiving _rewards or penalties_ .
+- **Human Feedback**: Evaluations provided by humans that guide the learning process, ensuring the model's outputs align with human expectations and preferences. ## Setup PPO Trainer ### Setup Reward Model and Utils ### Reward Assignment
+
+The objective is to align our text generation model towards the alignment signal provided.
+To do so, we need to assign a corresponding reward to each output logit ## Time to Align using RLHF : PPO
+> Todo add steps overview ### Plot Reward Distribution ### Compare Rewards ### Save Aligned Model Objects ## Generate and Compare Aligned vs Non-Aligned Models ## How Does this Actually Work? Show Me Examples Please?
+
+### Standard Supervised Learning:
+- Input: "Generate a story about a dragon and a knight."
+- Output: The model generates a story based on its training data.
+
+
+### Reinforcement Learning From Human Feedback:
+- Input: "Generate a story about a dragon and a knight."
+- Initial Output: The model generates a story.
+- Human Feedback: A human rates the story on coherence, creativity, and engagement.
+- Adjusted Output: The model refines its story generation based on the feedback, leading to more engaging and coherent stories over time.
+
+As pointed out in the figure above, one of the ways of bringing this alignment is through:
+- Training a **reward model** using a Human labelled dataset.
+    - This dataset basically contains rank ordered responses to different inputs to the model
+- The reward model learns to predict human preferences based on the provided human feedback by assigning a score (reward) to the outputs of the language model.
+-  The output of the reward model is then used to update the policy of the language model (agent) to align with the human feedback (exploration vs exploitation)
+
+
+<img src="https://huggingface.co/datasets/trl-internal-testing/example-images/resolve/main/images/trl_overview.png">
+
+> Source: https://huggingface.co/docs/trl/en/quickstart ## PPO vs DPO
+
+There are different ways of performing policy optimisation. The original work follows Proximal Policy Optimisation which requires a separate reward model to tune the Language Model. DPO or Direct Policy Optimisation directly applies updates to the language model thus removing the need for a separate reward model.
+
+> Read more about RL and KL Divergence to understand the topic better
+
+
+> The KL-divergence between the two outputs is used as an _additional reward signal_ to make sure the generated responses don’t deviate too far from the reference language model. # Quick Hello World Using PPO
+
+> Can we improve alignment of Phi-1.5?
+
+> Adapted from:
+> [[1](https://huggingface.co/docs/trl/en/quickstart)], [[2](https://github.com/antndlcrx/oxford-llms-workshop/blob/main/materials/seminars/day_3/8_LLMs%20alignment%20with%20RLHF.ipynb)] ## Install Dependencies ## Import Packages ## Configs ## Download Models ## Prepare Dataset
