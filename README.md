@@ -47,14 +47,8 @@
     - [x] Handson with DSPY
 
 #### Module 5: "The Future of LLMs and Next Steps"
-- Multi-modal: Integration of different data modalities in LLMs.
-- Mixture of Experts: Using a mixture of expert models for improved performance.
-- SLM: Introduction to Small LMs.
-- Ethics and Bias in LLMs: Understanding and mitigating biases in LLMs.
 - Next Steps: Speculative topics on future advancements.
-- GPT5?: What to expect from the next generation of GPT.
 - Beyond: Future possibilities and directions for LLM research.
--  :star: Hands-On: (If time permits) Experimenting with multi-modal models and mixture of experts.
 
 ---
 
