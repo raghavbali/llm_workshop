@@ -87,13 +87,19 @@
         - or check [here](https://python-poetry.org/docs/#installing-with-the-official-installer)
 
 - **Setup**:
-    - If you are on mac/linux and have `make` setup, simply execute: ``make setup`` otherwise:
-    - ``pyenv install 3.11.9``
-	- ``pyenv virtualenv 3.11.9 datahack``
-    - ``cd <path to this repo clone>``
-	- ``pyenv activate datahack``
-	- ``poetry install`` <- Make sure ``pyproject.toml`` file is available in directory you execute this command
-    - If you are using other ways of dependency management, use the `requirements.txt` file for reference.
+    - Local Mac/Linux :If you have `make` available, simply execute: ``make setup`` otherwise:
+    - RunPod or other Similar Providers: simply execute: ``make runpod_setup`` otherwise:
+    - If you are using other ways of dependency management:
+        - Python Environment:
+            -``pyenv install 3.11.9``
+            - ``pyenv virtualenv 3.11.9 datahack``
+            - ``cd <path to this repo clone>``
+            - ``pyenv activate datahack``
+            - ``poetry install`` <- Make sure ``pyproject.toml`` file is available in directory you execute this command
+            OR
+            - use the `requirements.txt` file for reference.
+        - Setup ``nvm`` / ``node`` and install ``localtunnel``
+    
 
 
 
