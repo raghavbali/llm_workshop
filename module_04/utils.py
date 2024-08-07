@@ -108,7 +108,7 @@ def get_hf_llm_answer(payload,lm_model):
 def get_local_llama_answer(payload,lm_model):
     try:
         content = f"Given the context, perform the following tasks:1.Respond with a summarized answer to the question factually in few words only if the provided context contains the answer\n2.Check if your answer is really in the provided context, otherwise respond with 'Sorry I could not find the answer'.\n 3.Generate a relevance score between 0 and 1.\n4. Format the output as a json with answer and score as keys.\n5.Do not add makrdown syntax only respond with json.\nBe careful and Think step by step.\ncontext:{payload['context']}\nquestion:{payload['question']}"
-        response = ollama.chat(model='llama3.1', messages=[
+        response = ollama.chat(model='llama3.1:8b', messages=[
             {
                 'role': 'user',
                 'content': content,

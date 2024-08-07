@@ -23,7 +23,7 @@ AVAILABLE_LMs = {
         'deepset/roberta-base-squad2',
         'Intel/dynamic_tinybert',
         #'google/gemma-2-2b-it', # this is timing out mostly
-        'Local-LLAMA-3.1',
+        'Local-LLAMA-3.1:8b',
         'OpenAI-GPT4o-mini'
     ],
     'endpoints':
