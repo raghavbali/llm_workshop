@@ -52,17 +52,22 @@
 
 ---
 
-### Prerequisites
+<details>
+<summary><h3>Prerequisites</h3></summary>
+
 - Basics/hands-on experience of working with python
 - Basic understanding of linear algebra and machine larning
 - Basic understanding of Deep Neural Networks
 - Basics/hands-on experience with pytorch
 - Access to google-colab or similar python environment
-- Access to chatGPT or Google-Bard (free access) 
+- Access to chatGPT or Google-Bard (free access)
+
+</details> 
 
 ---
 
-## Environment Setup Instructions
+<details>
+<summary><h2>Environment Setup Instructions</h2></summary>
 
 > [!Important]
 > - Follow Step by Step for a quick setup. This should work as-is for Mac/Linux based systems.
@@ -99,6 +104,18 @@
             OR
             - use the `requirements.txt` file for reference.
         - Setup ``nvm`` / ``node`` and install ``localtunnel``
+
+</details>
+
+---
+
+## Contact
+
+👤 **Raghav Bali**
+
+🌐 **Website:** [raghavbali.github.io](https://raghavbali.github.io)
+
+💼 **LinkedIn:** [linkedin.com/in/raghav-bali](#) *(placeholder)*
     
 
 
